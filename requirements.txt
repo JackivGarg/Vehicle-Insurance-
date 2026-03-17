@@ -1,0 +1,22 @@
+ipykernel
+pandas
+numpy
+matplotlib
+plotly
+seaborn
+scikit-learn
+pymongo
+from_root
+dill
+certifi
+PyYAML
+boto3
+mypy-boto3-s3
+botocore
+fastapi
+python-multipart
+uvicorn
+jinja2
+imblearn
+-e . # THIS GOES TO SETUP.PY -> LOOKS FOR SETUP -> PACKAGES=FINDPACKAGES() -> SRC KE ANDR -> ISE LOCAL PACKAGES ENV MEI INSTALL FIR HM EK KO DUSRE FOLDER MEI USE KR SKTE HAI -> ab src mei jonse bhi function and all vo bhar se call
+# in python even without it , it can work but in production it will suck so basically do it!!
