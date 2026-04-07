@@ -11,10 +11,6 @@ from src.entity.s3_estimator import Proj1Estimator
 class ModelPusher:
     def __init__(self, model_evaluation_artifact: ModelEvaluationArtifact,
                  model_pusher_config: ModelPusherConfig):
-        """
-        :param model_evaluation_artifact: Output reference of data evaluation artifact stage
-        :param model_pusher_config: Configuration for model pusher
-        """
         self.s3 = SimpleStorageService()
         self.model_evaluation_artifact = model_evaluation_artifact
         self.model_pusher_config = model_pusher_config
@@ -22,13 +18,6 @@ class ModelPusher:
                                 model_path=model_pusher_config.s3_model_key_path)
 
     def initiate_model_pusher(self) -> ModelPusherArtifact:
-        """
-        Method Name :   initiate_model_evaluation
-        Description :   This function is used to initiate all steps of the model pusher
-        
-        Output      :   Returns model evaluation artifact
-        On Failure  :   Write an exception log and then raise an exception
-        """
         logging.info("Entered initiate_model_pusher method of ModelTrainer class")
 
         try:

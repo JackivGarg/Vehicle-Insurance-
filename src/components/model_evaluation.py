@@ -31,13 +31,6 @@ class ModelEvaluation:
             raise MyException(e, sys) from e
 
     def get_best_model(self) -> Optional[Proj1Estimator]:
-        """
-        Method Name :   get_best_model
-        Description :   This function is used to get model from production stage.
-        
-        Output      :   Returns model object if available in s3 storage
-        On Failure  :   Write an exception log and then raise an exception
-        """
         try:
             bucket_name = self.model_eval_config.bucket_name
             model_path=self.model_eval_config.s3_model_key_path
@@ -51,19 +44,16 @@ class ModelEvaluation:
             raise  MyException(e,sys)
         
     def _map_gender_column(self, df):
-        """Map Gender column to 0 for Female and 1 for Male."""
         logging.info("Mapping 'Gender' column to binary values")
         df['Gender'] = df['Gender'].map({'Female': 0, 'Male': 1}).astype(int)
         return df
 
     def _create_dummy_columns(self, df):
-        """Create dummy variables for categorical features."""
         logging.info("Creating dummy variables for categorical features")
         df = pd.get_dummies(df, drop_first=True)
         return df
 
     def _rename_columns(self, df):
-        """Rename specific columns and ensure integer types for dummy columns."""
         logging.info("Renaming specific columns and casting to int")
         df = df.rename(columns={
             "Vehicle_Age_< 1 Year": "Vehicle_Age_lt_1_Year",
@@ -75,21 +65,12 @@ class ModelEvaluation:
         return df
     
     def _drop_id_column(self, df):
-        """Drop the 'id' column if it exists."""
         logging.info("Dropping 'id' column")
         if "_id" in df.columns:
             df = df.drop("_id", axis=1)
         return df
 
     def evaluate_model(self) -> EvaluateModelResponse:
-        """
-        Method Name :   evaluate_model
-        Description :   This function is used to evaluate trained model 
-                        with production model and choose best model 
-        
-        Output      :   Returns bool value based on validation results
-        On Failure  :   Write an exception log and then raise an exception
-        """
         try:
             test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
             x, y = test_df.drop(TARGET_COLUMN, axis=1), test_df[TARGET_COLUMN]
@@ -127,13 +108,6 @@ class ModelEvaluation:
             raise MyException(e, sys)
 
     def initiate_model_evaluation(self) -> ModelEvaluationArtifact:
-        """
-        Method Name :   initiate_model_evaluation
-        Description :   This function is used to initiate all steps of the model evaluation
-        
-        Output      :   Returns model evaluation artifact
-        On Failure  :   Write an exception log and then raise an exception
-        """  
         try:
             print("------------------------------------------------------------------------------------------------")
             logging.info("Initialized Model Evaluation Component.")
